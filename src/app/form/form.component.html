@@ -1,0 +1,25 @@
+<form>
+  <fieldset>
+    <legend>Міняю</legend>
+    <label for="">
+      <input type="number" autofocus>
+    </label>
+    <select name="currency">
+      <option value="USD" selected>USD</option>
+      <option value="EUR">EUR</option>
+      <option value="UAH">UAH</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <legend>Отримую</legend>
+    <label>
+      <input type="text" readonly>
+    </label>
+    <select>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="UAH" selected>UAH</option>
+    </select>
+    </fieldset>
+  <button (click)="getData()">Розрахувати</button>
+</form>

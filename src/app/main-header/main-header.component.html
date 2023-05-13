@@ -1,0 +1,13 @@
+<div>
+  <h1>Конвертер валют</h1>
+  <form>
+    <label>
+      Введіть своє імʼя
+      <input type="text" #name (keyup.enter)="onClickMe(name.value)">
+      <input type="button" (click)="onClickMe(name.value)" value="Продовжити">
+    </label>
+  </form>
+  <p>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">{{message}}</a>
+  </p>
+</div>

@@ -1,25 +1,32 @@
 <form>
-  <fieldset>
-    <legend>Міняю</legend>
-    <label for="">
-      <input type="number" autofocus>
-    </label>
-    <select name="currency">
-      <option value="USD" selected>USD</option>
-      <option value="EUR">EUR</option>
-      <option value="UAH">UAH</option>
-    </select>
-  </fieldset>
-  <fieldset>
-    <legend>Отримую</legend>
-    <label>
-      <input type="text" readonly>
-    </label>
-    <select>
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="UAH" selected>UAH</option>
-    </select>
+  <ng-container *ngTemplateOutlet="curFieldset; context: {title: 'Міняю' | uppercase, selectName: 'curInput'}"></ng-container>
+  <ng-container *ngTemplateOutlet="curFieldset; context: {title: 'Отримую' | uppercase, selectName: 'curOutput'}"></ng-container>
+
+  <ng-template #curFieldset let-title="title" let-selectName="selectName">
+    <fieldset>
+      <legend>{{title}}</legend>
+      <label>
+        <input type="text">
+      </label>
+      <select name={{selectName}}>
+        <option *ngFor="let cur of curList" value="{{cur.cc}}">{{ cur.cc }}</option>
+      </select>
     </fieldset>
-  <button (click)="getData()">Розрахувати</button>
+  </ng-template>
+
+  <button>Розрахувати</button>
 </form>
+
+<ng-container *ngIf="curList.length > 1">
+  <ul>
+    <li *ngFor="let cur of curList">{{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></li>
+  </ul>
+</ng-container>
+<ng-container *ngIf="curList.length === 1">
+  <div>
+    <p *ngFor="let cur of curList"> Одна валюта: {{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></p>
+  </div>
+</ng-container>
+<ng-container *ngIf="curList.length === 0">
+  <h3>На жаль, валют нема</h3>
+</ng-container>

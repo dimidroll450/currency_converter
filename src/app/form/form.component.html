@@ -9,24 +9,10 @@
         <input type="text">
       </label>
       <select name={{selectName}}>
-        <option *ngFor="let cur of curList" value="{{cur.cc}}">{{ cur.cc }}</option>
+        <option *ngFor="let cur of list" value="{{cur.cc}}">{{ cur.cc }}</option>
       </select>
     </fieldset>
   </ng-template>
 
   <button>Розрахувати</button>
 </form>
-
-<ng-container *ngIf="curList.length > 1">
-  <ul>
-    <li *ngFor="let cur of curList">{{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></li>
-  </ul>
-</ng-container>
-<ng-container *ngIf="curList.length === 1">
-  <div>
-    <p *ngFor="let cur of curList"> Одна валюта: {{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></p>
-  </div>
-</ng-container>
-<ng-container *ngIf="curList.length === 0">
-  <h3>На жаль, валют нема</h3>
-</ng-container>

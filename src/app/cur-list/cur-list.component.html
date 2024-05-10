@@ -1,17 +1,27 @@
 <h3 >Актуальний курс валют проти Гривні</h3>
 
-<ng-container *ngIf="list.length > 1">
-  <ul>
-    <li *ngFor="let cur of list">{{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></li>
-  </ul>
-</ng-container>
+@if (list.length > 1) {
+  <ng-container>
+    <ul>
+        @for (cur of list; track cur) {
+          <li>{{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></li>
+        }
+    </ul>
+  </ng-container>
+}
 
-<ng-container *ngIf="list.length === 1">
-  <div>
-    <p *ngFor="let cur of list"> Одна валюта: {{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></p>
-  </div>
-</ng-container>
+@if (list.length === 1) {
+  <ng-container>
+    <div>
+      @for (cur of list; track cur) {
+        <p> Одна валюта: {{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></p>
+      }
+    </div>
+  </ng-container>
+}
 
-<ng-container *ngIf="list.length === 0">
-  <h3>На жаль, валют нема</h3>
-</ng-container>
+@if (list.length === 0) {
+  <ng-container>
+    <h3>На жаль, валют нема</h3>
+  </ng-container>
+}

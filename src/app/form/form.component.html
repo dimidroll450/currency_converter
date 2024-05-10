@@ -19,7 +19,9 @@
     </label>
     <select name="selectOutput" (change)="changeOutputCur($event)">
       <option value=""></option>
-      <option *ngFor="let cur of list" value="{{cur.cc}}">{{ cur.cc }}</option>
+      @for (cur of list; track cur) {
+        <option value="{{cur.cc}}">{{ cur.cc }}</option>
+      }
     </select>
   </fieldset>
 

@@ -1,22 +1,12 @@
 <h3 >Актуальний курс валют проти Гривні</h3>
 
-@if (list.length > 1) {
+@if (list.length > 0) {
   <ng-container>
     <ul>
         @for (cur of list; track cur) {
           <li>{{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></li>
         }
     </ul>
-  </ng-container>
-}
-
-@if (list.length === 1) {
-  <ng-container>
-    <div>
-      @for (cur of list; track cur) {
-        <p> Одна валюта: {{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></p>
-      }
-    </div>
   </ng-container>
 }
 

@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   getCurrency(): void {
     this.cur.getCurrency().subscribe({ next: (data:any) => {
-      this.curList = data; console.log(this.curList)
+      this.curList = data; // console.log(this.curList)
       localStorage.setItem('curObj', this.curList);
     }});
   }

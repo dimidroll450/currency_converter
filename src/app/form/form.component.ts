@@ -44,7 +44,7 @@ export class FormComponent {
     }
 
     if (inputCur === 'UAH') {
-      console.log(outputCur);
+      // console.log(outputCur);
       const [currItem, ...rest] = this.list.filter((item: { cc: string; }) => item.cc === outputCur);
 
       result = Math.abs(Number(inputVal) * Number(currItem.rate)).toFixed(2);

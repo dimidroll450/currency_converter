@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GetCurrencyService } from './services/get-currency.service';
+import { CurrList } from './utils/constants';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { GetCurrencyService } from './services/get-currency.service';
 })
 export class AppComponent implements OnInit {
   title = 'Конвертер валют';
-  curList: any = [];
+  curList: CurrList = [];
 
   constructor(private cur: GetCurrencyService) {}
 
@@ -18,9 +19,9 @@ export class AppComponent implements OnInit {
   }
 
   getCurrency(): void {
-    this.cur.getCurrency().subscribe({ next: (data:any) => {
-      this.curList = data; // console.log(this.curList)
-      localStorage.setItem('curObj', this.curList);
+    this.cur.getCurrency().subscribe({ next: (data: CurrList) => {
+      this.curList = data;
+      // localStorage.setItem('curObj', this.curList);
     }});
   }
 }

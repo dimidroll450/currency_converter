@@ -1,6 +1,7 @@
-import { Component, DoCheck, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GetCurrencyService } from './../services/get-currency.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CurrList } from '../utils/constants';
 
 @Component({
   selector: 'app-form',
@@ -11,12 +12,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class FormComponent {
   error!: string;
 
-  @Input() list: any;
+  @Input() list: CurrList = [];
 
   curForm: FormGroup = this._createForm();
-
-  constructor() {
-  }
 
   private _createForm() {
     return new FormGroup({
@@ -27,8 +25,9 @@ export class FormComponent {
     });
   }
 
-  changeOutputCur (e: any) {
-    this.curForm?.patchValue( { selectOutput: e.target.value });
+  changeOutputCur (e: Event) {
+    const target = e.target as HTMLTextAreaElement;
+    this.curForm?.patchValue( { selectOutput: target.value });
   }
 
   convertValue () {
@@ -45,7 +44,7 @@ export class FormComponent {
 
     if (inputCur === 'UAH') {
       // console.log(outputCur);
-      const [currItem, ...rest] = this.list.filter((item: { cc: string; }) => item.cc === outputCur);
+      const [currItem, ] = this.list.filter((item: { cc: string; }) => item.cc === outputCur);
 
       result = Math.abs(Number(inputVal) * Number(currItem.rate)).toFixed(2);
     }

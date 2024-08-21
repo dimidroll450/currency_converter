@@ -1,6 +1,10 @@
 {
-  "name": "first",
+  "name": "currency_converter",
   "version": "0.1.2",
+  "keywords": [
+    "converter",
+    "currency"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,6 +14,12 @@
     "lint": "ng lint"
   },
   "private": true,
+  "author": "dimidroll450",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dimidroll450/currency_converter/issues"
+  },
+  "homepage": "https://github.com/dimidroll450/currency_converter#readme",
   "dependencies": {
     "@angular/animations": "^18.0.2",
     "@angular/common": "^18.0.2",

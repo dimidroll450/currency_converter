@@ -1,6 +1,8 @@
-# First
+# Currency converter by Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+### Hexlet tests and linter status:
+[![Actions Status](https://github.com/dimidroll450/currency_converter/workflows/hexlet-check/badge.svg)](https://github.com/dimidroll450/currency_converter/actions)
+[![Node CI](https://github.com/dimidroll450/currency_converter/actions/workflows/nodejs.yml/badge.svg)](https://github.com/dimidroll450/currency_converter/actions/workflows/nodejs.yml)
 
 ## Development server
 

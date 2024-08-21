@@ -29,4 +29,4 @@ jobs:
           CI: true
 
       - name: Run linter
-        run: npm ng lint
+        run: npx ng lint

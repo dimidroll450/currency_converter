@@ -1,8 +1,8 @@
 # Currency converter by Angular
 
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/dimidroll450/currency_converter/workflows/hexlet-check/badge.svg)](https://github.com/dimidroll450/currency_converter/actions)
 [![Node CI](https://github.com/dimidroll450/currency_converter/actions/workflows/nodejs.yml/badge.svg)](https://github.com/dimidroll450/currency_converter/actions/workflows/nodejs.yml)
+[![CodeQL](https://github.com/dimidroll450/currency_converter/actions/workflows/CodeQL/badge.svg)](https://github.com/dimidroll450/currency_converter/actions?query=workflow%3ACodeQL)
 
 ## Development server
 

@@ -19,9 +19,9 @@ export class FormComponent {
   private _createForm() {
     return new FormGroup({
       "valInput": new FormControl("", Validators.pattern("[0-9]")),
-      "selectInput": new FormControl("UAH"),
+      "selectInput": new FormControl(''),
       "valOutput": new FormControl({ value: "", disabled: true }),
-      "selectOutput": new FormControl(''),
+      "selectOutput": new FormControl("UAH"),
     });
   }
 
@@ -42,9 +42,9 @@ export class FormComponent {
       return;
     }
 
-    if (inputCur === 'UAH') {
+    if (outputCur === 'UAH') {
       // console.log(outputCur);
-      const [currItem, ] = this.list.filter((item: { cc: string; }) => item.cc === outputCur);
+      const [currItem, ] = this.list.filter((item: { cc: string; }) => item.cc === inputCur);
 
       result = Math.abs(Number(inputVal) * Number(currItem.rate)).toFixed(2);
     }

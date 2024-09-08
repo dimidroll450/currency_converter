@@ -1,4 +1,4 @@
-name: Node CI
+name: Bun CI
 
 on:
   - push
@@ -11,24 +11,24 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        bun-version: [1.x]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Bun.js ${{ matrix.bun-version }}
 
-        uses: actions/setup-node@v4
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          bun-version: latest
 
       - name: npm install, build
         run: |
-          npm ci
+          bun install
           rm -rf dist
         env:
           CI: true
 
       - name: Run linter
-        run: npx ng lint
+        run: bun lint
       - name: Run tests
         run: "echo 'no tests available at the moment'"

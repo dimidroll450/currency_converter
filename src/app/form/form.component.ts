@@ -4,10 +4,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CurrList } from '../utils/constants';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],
-  providers: [GetCurrencyService]
+    selector: 'app-form',
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.scss'],
+    providers: [GetCurrencyService],
+    standalone: false
 })
 export class FormComponent {
   error!: string;

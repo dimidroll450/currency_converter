@@ -1,0 +1,8 @@
+{
+  "bannedCurrencies": [
+    { "code": "RUB" },
+    { "code": "BYN" },
+    { "code": "IRR" },
+    { "code": "KPW" }
+  ]
+}

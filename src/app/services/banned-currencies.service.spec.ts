@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+
 import { BannedCurrenciesService, BannedCurrency } from './banned-currencies.service';
 import { Constants } from '../utils/constants';
+
 
 describe('BannedCurrenciesService', () => {
   let service: BannedCurrenciesService;
@@ -9,8 +12,11 @@ describe('BannedCurrenciesService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [BannedCurrenciesService]
+      providers: [
+        BannedCurrenciesService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     });
 
     service = TestBed.inject(BannedCurrenciesService);
@@ -22,13 +28,16 @@ describe('BannedCurrenciesService', () => {
   });
 
   it('should be created', () => {
+    const req = httpMock.expectOne(Constants.currBanList);
+    req.flush({ bannedCurrencies: [] });
+
     expect(service).toBeTruthy();
   });
 
   it('should load banned currencies on initialization', () => {
     const mockBannedCurrencies: BannedCurrency[] = [
-      { code: 'USD' },
-      { code: 'EUR' }
+      { code: 'RUB' },
+      { code: 'BYN' }
     ];
 
     const mockResponse = { bannedCurrencies: mockBannedCurrencies };
@@ -41,8 +50,8 @@ describe('BannedCurrenciesService', () => {
     // Check if banned currencies are set correctly
     const currencyBanlist = service.getCurrencyBanlist();
     expect(currencyBanlist.length).toBe(2);
-    expect(currencyBanlist[0].code).toBe('USD');
-    expect(currencyBanlist[1].code).toBe('EUR');
+    expect(currencyBanlist[0].code).toBe('RUB');
+    expect(currencyBanlist[1].code).toBe('BYN');
   });
 
   it('should handle HTTP error when loading banned currencies', () => {
@@ -51,7 +60,7 @@ describe('BannedCurrenciesService', () => {
 
     // Simulate HTTP error
     const req = httpMock.expectOne(Constants.currBanList);
-    req.error(new ErrorEvent('Network error'));
+    req.error(new ProgressEvent('Network error'));
 
     // Verify error handling
     expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -62,21 +71,24 @@ describe('BannedCurrenciesService', () => {
 
   it('should correctly identify banned currencies', () => {
     const mockBannedCurrencies: BannedCurrency[] = [
-      { code: 'USD' },
-      { code: 'EUR' }
+      { code: 'RUB' },
+      { code: 'BYN' }
     ];
 
     const req = httpMock.expectOne(Constants.currBanList);
     req.flush({ bannedCurrencies: mockBannedCurrencies });
 
     // Test isCurrencyBanned method
-    expect(service.isCurrencyBanned('USD')).toBeTrue();
-    expect(service.isCurrencyBanned('EUR')).toBeTrue();
+    expect(service.isCurrencyBanned('RUB')).toBeTrue();
+    expect(service.isCurrencyBanned('BYN')).toBeTrue();
     expect(service.isCurrencyBanned('GBP')).toBeFalse();
   });
 
   it('should return an empty list before currencies are loaded', () => {
+    const req = httpMock.expectOne(Constants.currBanList);
+    req.flush({ bannedCurrencies: [] });
     const currencyBanlist = service.getCurrencyBanlist();
+
     expect(currencyBanlist.length).toBe(0);
   });
 });

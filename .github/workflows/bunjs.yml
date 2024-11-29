@@ -31,4 +31,4 @@ jobs:
       - name: Run linter
         run: bun lint
       - name: Run tests
-        run: bun test
+        run: bun tests ci

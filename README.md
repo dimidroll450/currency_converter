@@ -1,8 +1,10 @@
 # Currency converter by Angular
 
 ### Tests and linter status:
-[![Node CI](https://github.com/dimidroll450/currency_converter/actions/workflows/nodejs.yml/badge.svg)](https://github.com/dimidroll450/currency_converter/actions/workflows/nodejs.yml)
+[![Bun CI](https://github.com/dimidroll450/currency_converter/actions/workflows/bunjs.yml/badge.svg)](https://github.com/dimidroll450/currency_converter/actions/workflows/bunjs.yml)
 [![CodeQL](https://github.com/dimidroll450/currency_converter/workflows/CodeQL/badge.svg)](https://github.com/dimidroll450/currency_converter/actions?query=workflow%3ACodeQL)
+![Vercel](https://vercelbadge.vercel.app/api/dimidroll450/currency_converter)
+
 
 ## Development server
 

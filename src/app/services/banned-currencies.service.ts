@@ -1,4 +1,4 @@
-import { Injectable, signal, inject } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Constants } from '../utils/constants';
 
@@ -14,11 +14,11 @@ interface Banlist {
   providedIn: 'root',
 })
 export class BannedCurrenciesService {
-  private readonly http = inject(HttpClient);
+  //private readonly http = inject(HttpClient);
 
   private bannedCurrencies = signal<BannedCurrency[]>([]);
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.loadBanlist();
   }
 

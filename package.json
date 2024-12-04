@@ -8,11 +8,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && bun run sentry:sourcemaps",
     "watch": "ng build --watch --configuration development",
     "tests": "ng test",
     "tests_ci": "ng test --no-watch --no-progress --browsers=FirefoxHeadless",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org chicki-bricki --project javascript-angular ./dist && sentry-cli sourcemaps upload --org chicki-bricki --project javascript-angular ./dist"
   },
   "private": true,
   "author": "dimidroll450",
@@ -30,6 +31,8 @@
     "@angular/platform-browser": "^19.0.1",
     "@angular/platform-browser-dynamic": "^19.0.1",
     "@angular/router": "^19.0.1",
+    "@sentry/angular": "^8.42.0",
+    "@sentry/cli": "^2.39.1",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
     "rxjs": "~7.8.1",

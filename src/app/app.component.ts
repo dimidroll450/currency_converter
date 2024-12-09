@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 
           return(a.cc.localeCompare(b.cc));
         });
-      console.debug(this.curList);
+
       // localStorage.setItem('curObj', this.curList);
     }});
   }

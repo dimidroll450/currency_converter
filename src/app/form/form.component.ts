@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
 import { GetCurrencyService } from './../services/get-currency.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CurrList } from '../utils/constants';
 
 @Component({
@@ -8,7 +9,7 @@ import { CurrList } from '../utils/constants';
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
     providers: [GetCurrencyService],
-    standalone: false
+    imports: [ReactiveFormsModule]
 })
 export class FormComponent {
   error!: string;

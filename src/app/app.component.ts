@@ -1,13 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
+
 import { GetCurrencyService } from './services/get-currency.service';
 import { BannedCurrenciesService } from './services/banned-currencies.service';
 import { CurrList } from './utils/constants';
+import { MainHeaderComponent } from './main-header/main-header.component';
+import { FormComponent } from './form/form.component';
+import { CurListComponent } from './cur-list/cur-list.component';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    imports: [MainHeaderComponent, FormComponent, CurListComponent]
 })
 export class AppComponent implements OnInit {
   title = 'Конвертер валют';

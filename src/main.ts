@@ -1,10 +1,15 @@
-import { isDevMode } from "@angular/core";
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { isDevMode, ErrorHandler, APP_INITIALIZER, importProvidersFrom } from "@angular/core";
 import { inject } from "@vercel/analytics";
 import { injectSpeedInsights } from "@vercel/speed-insights";
 import * as Sentry from "@sentry/angular";
 
-import { AppModule } from './app/app.module';
+
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
+import { AppRoutingModule } from "./app/app-routing.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { AppComponent } from "./app/app.component";
 
 inject({ mode: isDevMode() ? 'development' : 'production' });
 injectSpeedInsights();
@@ -24,5 +29,26 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
 });
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+    providers: [
+        importProvidersFrom(BrowserModule, AppRoutingModule, ReactiveFormsModule),
+        provideHttpClient(withInterceptorsFromDi()),
+        {
+            provide: ErrorHandler,
+            useValue: Sentry.createErrorHandler({
+                showDialog: true,
+            }),
+        }, {
+            provide: Sentry.TraceService,
+            deps: [Router],
+        },
+        {
+            provide: APP_INITIALIZER,
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            useFactory: () => () => { },
+            deps: [Sentry.TraceService],
+            multi: true,
+        }
+    ]
+})
   .catch(err => console.error(err));

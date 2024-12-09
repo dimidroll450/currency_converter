@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'customText',
-    standalone: false
-})
+@Pipe({ name: 'customText' })
 export class CustomTextPipe implements PipeTransform {
 
   transform(value: string, ...args: unknown[]): string {

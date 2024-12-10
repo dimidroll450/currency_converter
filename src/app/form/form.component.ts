@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 import { GetCurrencyService } from './../services/get-currency.service';
 import { CurrList } from '../utils/constants';
@@ -9,7 +12,12 @@ import { CurrList } from '../utils/constants';
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
     providers: [GetCurrencyService],
-    imports: [ReactiveFormsModule]
+    imports: [
+      ReactiveFormsModule,
+      MatButtonModule,
+      MatSelectModule,
+      MatInputModule
+    ]
 })
 export class FormComponent {
   error!: string;
@@ -20,7 +28,7 @@ export class FormComponent {
 
   private _createForm() {
     return new FormGroup({
-      "valInput": new FormControl("", Validators.pattern("[0-9]")),
+      "valInput": new FormControl("", [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       "selectInput": new FormControl(''),
       "valOutput": new FormControl({ value: "", disabled: true }),
       "selectOutput": new FormControl("UAH"),

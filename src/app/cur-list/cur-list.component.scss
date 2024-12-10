@@ -1,0 +1,30 @@
+mat-card {
+  margin-top: 20px;
+  border: 3px solid var(--mat-sys-inverse-primary);
+  border-radius: var(--mat-sys-corner-large);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--mat-sys-secondary);
+}
+
+.cur-value {
+  text-align: right;
+}
+
+@media (min-width: 768px) {
+  mat-card {
+    width: 50%;
+  }
+}

@@ -1,17 +1,25 @@
-<h3 >Актуальний курс валют проти Гривні</h3>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Актуальний курс валют проти Гривні</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    @if (list.length > 0) {
+      <ng-container>
+        <div class="container">
+          @for (cur of list; track cur) {
+            <div class="item">
+              <p class="cur-name">{{cur.txt| uppercase}}</p>
+              <p class="cur-value" [innerHTML]="cur.rate | customText: 'b': 'i'"></p>
+            </div>
+          }
+        </div>
+      </ng-container>
+    }
 
-@if (list.length > 0) {
-  <ng-container>
-    <ul>
-        @for (cur of list; track cur) {
-          <li>{{cur.txt| uppercase}} - <span [innerHTML]="cur.rate | customText: 'b': 'i'"></span></li>
-        }
-    </ul>
-  </ng-container>
-}
-
-@if (list.length === 0) {
-  <ng-container>
-    <h3>На жаль, валют нема</h3>
-  </ng-container>
-}
+    @if (list.length === 0) {
+      <ng-container>
+        <p>Виникла помилка під час завантаження списку валют</p>
+      </ng-container>
+    }
+  </mat-card-content>
+</mat-card>

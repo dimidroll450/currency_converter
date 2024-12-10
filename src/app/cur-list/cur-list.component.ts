@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
 
 import { CurrList } from '../utils/constants';
 import { CustomTextPipe } from '../pipes/custom-text.pipe';
@@ -8,7 +9,7 @@ import { CustomTextPipe } from '../pipes/custom-text.pipe';
     selector: 'cur-list',
     templateUrl: './cur-list.component.html',
     styleUrls: ['./cur-list.component.scss'],
-    imports: [UpperCasePipe, CustomTextPipe]
+    imports: [UpperCasePipe, CustomTextPipe, MatCardModule]
 })
 export class CurListComponent {
   @Input() list: CurrList = [];

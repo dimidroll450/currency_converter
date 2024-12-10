@@ -2,28 +2,44 @@
 
   <fieldset>
     <legend>Міняю</legend>
-    <label>
-      <input type="number" name="valInput" formControlName="valInput">
-    </label>
-    <select name="selectInput" formControlName="selectInput">
-      <option value=""></option>
+    <mat-form-field>
+      <mat-label>Введіть сумму</mat-label>
+        <input
+          matInput
+          name="valInput"
+          formControlName="valInput"
+        >
+      </mat-form-field>
+    <mat-form-field>
+    <mat-select name="selectInput" formControlName="selectInput">
+      <mat-option value=""></mat-option>
       @for (cur of list; track cur) {
-        <option value="{{cur.cc}}">{{ cur.cc }}</option>
+        <mat-option value="{{cur.cc}}">{{ cur.txt }}</mat-option>
       }
-      <!-- поки тільки для гривні -->
-      <!-- <option *ngFor="let cur of list" value="{{cur.cc}}">{{ cur.cc }}</option> -->
-    </select>
+      </mat-select>
+    </mat-form-field>
   </fieldset>
 
   <fieldset>
     <legend>Отримую</legend>
-    <label>
-      <input type="number" name="valOutput" formControlName="valOutput">
-    </label>
-    <select name="selectOutput" (change)="changeOutputCur($event)">
-      <option value="UAH">UAH</option>
-    </select>
+    <mat-label>
+      <mat-form-field>
+        <input
+          class="valOutput"
+          matInput
+          name="valOutput"
+          formControlName="valOutput"
+        >
+      </mat-form-field>
+      </mat-label>
+    <mat-form-field>
+    <mat-select name="selectOutput" formControlName="selectOutput" (change)="changeOutputCur($event)">
+      <mat-option value="UAH">Гривня</mat-option>
+      <!-- поки тільки для гривні -->
+      <!-- <option *ngFor="let cur of list" value="{{cur.cc}}">{{ cur.cc }}</option> -->
+    </mat-select>
+  </mat-form-field>
   </fieldset>
 
-  <button>Розрахувати</button>
+  <button mat-fab extended color="primary">Розрахувати</button>
 </form>

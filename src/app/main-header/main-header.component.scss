@@ -11,25 +11,11 @@ h1 {
   text-transform: uppercase;
 }
 
-form {
-  padding: 40px;
+a {
+  color: green;
+  text-decoration: inherit;
 }
 
-input[type=button] {
-  display: inline-block;
-  margin-left: 10px;
-  padding: 10px 24px;
-  border: none;
-  border-radius: 7px;
-
-  color: #fff;
-  font-weight: bold;
-
-  background: #47cf73;
-
-  cursor: pointer;
-
-  &:hover {
-    background-color: #92caa4;
-  }
+mat-divider {
+  padding-bottom: 30px;
 }

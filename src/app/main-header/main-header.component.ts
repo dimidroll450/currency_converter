@@ -1,18 +1,11 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
     selector: 'main-header',
     templateUrl: './main-header.component.html',
     styleUrls: ['./main-header.component.scss'],
-    imports: [ReactiveFormsModule]
+    imports: [MatDividerModule]
 })
-export class MainHeaderComponent {
-  message = '';
 
-  onClickMe(name: string) {
-    if (name) {
-    this.message = `Натисни на мене, ${name}`;
-    }
-  }
-}
+export class MainHeaderComponent {}

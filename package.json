@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "bun --watch local-server & ng serve currency_converter",
     "build": "ng build && bun run sentry:sourcemaps",
     "watch": "ng build --watch --configuration development",
     "tests": "ng test",
@@ -50,6 +50,7 @@
     "@typescript-eslint/parser": "^8.16.0",
     "angular-eslint": "18.1.0",
     "eslint": "^9.15.0",
+    "express": "^5.1.0",
     "jasmine-core": "~4.6.1",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",

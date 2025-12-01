@@ -12,11 +12,13 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from "./app/app.component";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { environment } from "./environments/environment";
+
 inject({ mode: isDevMode() ? 'development' : 'production' });
 injectSpeedInsights();
 
 Sentry.init({
-  dsn: "https://8bf9aa9572f29d71534d78b83284e9e9@o4508410843496448.ingest.de.sentry.io/4508410846183504",
+  dsn: environment.sentry_dsn,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),

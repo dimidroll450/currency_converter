@@ -15,10 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 24.15.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.15.0
       - name: Use Bun.js ${{ matrix.bun-version }}
 
         uses: oven-sh/setup-bun@v2

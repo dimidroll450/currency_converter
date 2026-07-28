@@ -2,7 +2,7 @@
 
 ## Project overview
 
-This repository contains a client-side Angular currency converter. It uses Angular Material, standalone components, reactive forms, signals, and `HttpClient`. The application currently targets Angular 19 and is expected to migrate one major at a time toward Angular 22.
+This repository contains a client-side Angular 22 currency converter. It uses Angular Material, standalone components, reactive forms, signals, zoneless change detection, and `HttpClient`.
 
 Before changing Angular code, inspect `package.json` and run `bunx ng version`. Apply guidance appropriate to the installed Angular version, not merely the intended target version.
 
@@ -32,7 +32,7 @@ Do not replace Bun with npm, pnpm, or Yarn, and do not introduce another lockfil
 - Track `@for` collections by a stable identifier when one is available rather than by object identity.
 - Keep strict TypeScript and Angular template checking enabled.
 
-The existing `AppRoutingModule` is a legacy bridge around an empty route configuration. Do not expand this NgModule architecture; prefer standalone router providers when routing work is required.
+Routes live in `app.routes.ts` and are registered with `provideRouter`. Keep routing standalone; do not introduce routing NgModules.
 
 ## State, forms, and RxJS
 
@@ -60,7 +60,7 @@ The existing `AppRoutingModule` is a legacy bridge around an empty route configu
 
 ## Testing
 
-The current test stack is Karma, Jasmine, and Angular `TestBed`. Match that setup unless the task explicitly requests a test-runner migration.
+The current test stack is Vitest, Angular's `unit-test` builder, and Angular `TestBed`. Match that setup unless the task explicitly requests a test-runner migration.
 
 - Add or update focused tests for behavioral changes.
 - Use Angular testing providers such as `provideHttpClientTesting()` for HTTP tests.
@@ -74,7 +74,7 @@ For Angular major upgrades:
 1. Upgrade sequentially: 19 to 20, 20 to 21, then 21 to 22.
 2. Use `ng update` schematics; do not update framework version strings by hand as a substitute.
 3. Keep Angular Core, CLI, compiler, build tooling, Material, CDK, and Angular ESLint compatible at every stage.
-4. Confirm the required Node.js, TypeScript, RxJS, and `zone.js` ranges before each major.
+4. Confirm the required Node.js, TypeScript, and RxJS ranges before each major.
 5. Resolve peer-dependency conflicts rather than using `--force` or `--legacy-peer-deps`.
 6. Run lint, tests, and a production build after every major step.
 7. Inspect and preserve unrelated worktree changes, especially the existing `bun.lockb` state.

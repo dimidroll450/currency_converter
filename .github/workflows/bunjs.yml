@@ -15,16 +15,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Use Node.js 24.15.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
       - name: Use Bun.js ${{ matrix.bun-version }}
 
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: npm install, build
-        run: |
-          bun install
-          rm -rf dist
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
         env:
           CI: true
 
@@ -32,3 +34,5 @@ jobs:
         run: bun lint
       - name: Run tests
         run: bun tests_ci
+      - name: Build application
+        run: bunx ng build --configuration production

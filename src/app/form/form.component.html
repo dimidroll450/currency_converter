@@ -1,45 +1,32 @@
-<form [formGroup]="curForm" novalidate (submit)="convertValue()">
-
+<form [formGroup]="currencyForm" (ngSubmit)="convertValue()">
   <fieldset>
     <legend>Міняю</legend>
     <mat-form-field>
       <mat-label>Введіть сумму</mat-label>
-        <input
-          matInput
-          name="valInput"
-          formControlName="valInput"
-        >
-      </mat-form-field>
+      <input matInput inputmode="decimal" formControlName="inputValue">
+    </mat-form-field>
     <mat-form-field>
-    <mat-select name="selectInput" formControlName="selectInput">
-      <mat-option value=""></mat-option>
-      @for (cur of list; track cur) {
-        <mat-option value="{{cur.cc}}">{{ cur.txt }}</mat-option>
-      }
+      <mat-select formControlName="inputCurrency">
+        <mat-option value="" />
+        @for (cur of list(); track cur.r030) {
+          <mat-option [value]="cur.cc">{{ cur.txt }}</mat-option>
+        }
       </mat-select>
     </mat-form-field>
   </fieldset>
 
   <fieldset>
     <legend>Отримую</legend>
-    <mat-label>
-      <mat-form-field>
-        <input
-          class="valOutput"
-          matInput
-          name="valOutput"
-          formControlName="valOutput"
-        >
-      </mat-form-field>
-      </mat-label>
     <mat-form-field>
-    <mat-select name="selectOutput" formControlName="selectOutput" (change)="changeOutputCur($event)">
-      <mat-option value="UAH">Гривня</mat-option>
-      <!-- поки тільки для гривні -->
-      <!-- <option *ngFor="let cur of list" value="{{cur.cc}}">{{ cur.cc }}</option> -->
-    </mat-select>
-  </mat-form-field>
+      <mat-label>Результат</mat-label>
+      <input class="valOutput" matInput formControlName="outputValue">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="outputCurrency">
+        <mat-option value="UAH">Гривня</mat-option>
+      </mat-select>
+    </mat-form-field>
   </fieldset>
 
-  <button mat-fab extended color="primary">Розрахувати</button>
+  <button type="submit" mat-fab extended color="primary">Розрахувати</button>
 </form>

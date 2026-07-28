@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
-    selector: 'main-header',
-    templateUrl: './main-header.component.html',
-    styleUrls: ['./main-header.component.scss'],
-    imports: [MatDividerModule]
+  selector: 'app-main-header',
+  templateUrl: './main-header.component.html',
+  styleUrl: './main-header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatDividerModule],
 })
 
 export class MainHeaderComponent {}

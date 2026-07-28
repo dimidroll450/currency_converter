@@ -1,18 +1,15 @@
-import { isDevMode, ErrorHandler, APP_INITIALIZER, importProvidersFrom } from "@angular/core";
-import { inject } from "@vercel/analytics";
-import { injectSpeedInsights } from "@vercel/speed-insights";
-import * as Sentry from "@sentry/angular";
+import { ErrorHandler, inject, isDevMode, provideAppInitializer } from '@angular/core';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter, Router } from '@angular/router';
+import * as Sentry from '@sentry/angular';
+import { inject as injectVercelAnalytics } from '@vercel/analytics';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
 
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
-import { AppRoutingModule } from "./app/app-routing.module";
-import { ReactiveFormsModule } from "@angular/forms";
-import { AppComponent } from "./app/app.component";
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
-inject({ mode: isDevMode() ? 'development' : 'production' });
+injectVercelAnalytics({ mode: isDevMode() ? 'development' : 'production' });
 injectSpeedInsights();
 
 Sentry.init({
@@ -31,25 +28,20 @@ Sentry.init({
 });
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, AppRoutingModule, ReactiveFormsModule),
-        provideHttpClient(withInterceptorsFromDi()),
-        {
-            provide: ErrorHandler,
-            useValue: Sentry.createErrorHandler({
-                showDialog: true,
-            }),
-        }, {
-            provide: Sentry.TraceService,
-            deps: [Router],
-        },
-        {
-            provide: APP_INITIALIZER,
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            useFactory: () => () => { },
-            deps: [Sentry.TraceService],
-            multi: true,
-        }, provideAnimationsAsync()
-    ]
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withFetch()),
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({ showDialog: true }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    provideAppInitializer(() => {
+      inject(Sentry.TraceService);
+    }),
+  ],
 })
-  .catch(err => console.error(err));
+  .catch((error: unknown) => console.error(error));

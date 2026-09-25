@@ -3,12 +3,13 @@
 ## Toolchain and commands
 
 - Use Bun (`bun.lockb` is tracked); Node.js 24.x is required.
+- Vercel runs the build script under Bun via `vercel.json`; `bunVersion` selects Bun for any future Vercel Functions. The deployed Angular app runs in the browser.
 - This is one Angular application, named `first`, with source in `src/`.
 - Start development: `bun run start`.
 - Lint TypeScript and HTML: `bun run lint`. SCSS is not part of the configured lint targets.
 - Run the Vitest suite once: `bun run tests_ci`.
 - Run a focused test file or directory: `bunx ng test --watch=false --include src/app/services/banned-currencies.service.spec.ts`.
-- Use `bunx ng build --configuration production` for a production build. Do not use `bun run build` for routine verification: it builds and then injects/uploads Sentry source maps.
+- Use `bun run build:app` for a production build under Bun. Do not use `bun run build` for routine verification: it also injects/uploads Sentry source maps.
 - Production budgets limit initial output to 1 MB and any component stylesheet to 4 KB.
 
 ## Application wiring

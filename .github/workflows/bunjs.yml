@@ -31,4 +31,4 @@ jobs:
       - name: Run tests
         run: bun tests_ci
       - name: Build application
-        run: bunx ng build --configuration production
+        run: bun run build:app

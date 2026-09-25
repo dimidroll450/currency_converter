@@ -8,7 +8,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && bun run sentry:sourcemaps",
+    "build:app": "bun run --bun ng build --configuration production",
+    "build": "bun run build:app && bun run sentry:sourcemaps",
     "watch": "ng build --watch --configuration development",
     "tests": "ng test",
     "tests_ci": "ng test --watch=false",

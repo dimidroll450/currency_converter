@@ -1,4 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, of, switchMap, timer } from 'rxjs';
 
 import { GetCurrencyService } from './services/get-currency.service';
 import { BannedCurrenciesService } from './services/banned-currencies.service';
@@ -8,42 +10,51 @@ import { FormComponent } from './form/form.component';
 import { CurListComponent } from './cur-list/cur-list.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [MainHeaderComponent, FormComponent, CurListComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MainHeaderComponent, FormComponent, CurListComponent],
 })
-export class AppComponent implements OnInit {
-  title = 'Конвертер валют';
-  curList: CurrList = [];
+export class AppComponent {
+  private readonly currencyService = inject(GetCurrencyService);
+  private readonly bannedCurrenciesService = inject(BannedCurrenciesService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly currencies = signal<CurrList>([]);
 
-  cur = inject(GetCurrencyService);
-  curBanlist = inject(BannedCurrenciesService);
-  priorityList = Constants.priorityCurrs;
+  protected readonly currencyList = computed(() =>
+    this.currencies()
+      .filter((currency) => !this.bannedCurrenciesService.isCurrencyBanned(currency.cc))
+      .sort((first, second) => this.compareCurrencies(first.cc, second.cc)),
+  );
 
-  ngOnInit(): void {
-
-    this.getCurrency();
-    setInterval(() => this.getCurrency(), 100000);
+  constructor() {
+    timer(0, 100_000)
+      .pipe(
+        switchMap(() =>
+          this.currencyService.getCurrency().pipe(
+            catchError((error: unknown) => {
+              console.error('Error loading currencies:', error);
+              return of([] as CurrList);
+            }),
+          ),
+        ),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((currencies) => this.currencies.set(currencies));
   }
 
-  getCurrency(): void {
-    this.cur.getCurrency().subscribe({ next: (data: CurrList) => {
-      this.curList = data
-        .filter(
-          ( item => !this.curBanlist.isCurrencyBanned(item.cc) )
-        )
-        .sort((a, b) => {
-          const indexA = this.priorityList.indexOf(a.cc);
-          const indexB = this.priorityList.indexOf(b.cc);
+  private compareCurrencies(firstCode: string, secondCode: string): number {
+    const firstPriority = Constants.priorityCurrs.indexOf(firstCode);
+    const secondPriority = Constants.priorityCurrs.indexOf(secondCode);
 
-          if (indexA !== -1 && indexB === -1) return -1;
-          if (indexA === -1 && indexB !== -1) return 1;
-          if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (firstPriority === -1 && secondPriority === -1) {
+      return firstCode.localeCompare(secondCode);
+    }
 
-          return(a.cc.localeCompare(b.cc));
-        });
-      // localStorage.setItem('curObj', this.curList);
-    }});
+    if (firstPriority === -1) return 1;
+    if (secondPriority === -1) return -1;
+
+    return firstPriority - secondPriority;
   }
 }

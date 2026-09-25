@@ -1,8 +1,8 @@
-import { Injectable, signal } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Constants } from '../utils/constants';
 
- export interface BannedCurrency {
+export interface BannedCurrency {
   code: string;
 }
 
@@ -14,29 +14,23 @@ interface Banlist {
   providedIn: 'root',
 })
 export class BannedCurrenciesService {
-  //private readonly http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
+  private readonly bannedCurrenciesState = signal<readonly BannedCurrency[]>([]);
 
-  private bannedCurrencies = signal<BannedCurrency[]>([]);
+  readonly bannedCurrencies = this.bannedCurrenciesState.asReadonly();
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.loadBanlist();
-  }
-
-   get getCurrencyBanlist() {
-    return(this.bannedCurrencies.asReadonly());
   }
 
   private loadBanlist(): void {
     this.http.get<Banlist>(Constants.currBanList).subscribe({
-      next: (data) => {
-      this.bannedCurrencies.set(data.bannedCurrencies)
-      },
-      error: (err) => console.error('Error loading banned currencies:', err),
+      next: ({ bannedCurrencies }) => this.bannedCurrenciesState.set(bannedCurrencies),
+      error: (error: unknown) => console.error('Error loading banned currencies:', error),
     });
-
   }
 
   isCurrencyBanned(code: string): boolean {
-    return( this.getCurrencyBanlist().some(curr =>  curr.code === code) );
-  };
+    return this.bannedCurrencies().some((currency) => currency.code === code);
+  }
 }

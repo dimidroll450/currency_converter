@@ -1,14 +1,24 @@
-# AGENTS.md
+# Repository Guide
 
-## Project overview
+## Toolchain and commands
 
-This repository contains a client-side Angular 22 currency converter. It uses Angular Material, standalone components, reactive forms, signals, zoneless change detection, and `HttpClient`.
+- Use Bun 1.4.x (`bun.lockb` is tracked). When running the Angular CLI under Node.js, use Node.js 24.15.0 or newer within the 24.x release line.
+- Vercel runs the build script under Bun via `vercel.json`; do not set `engines.node` in `package.json` because it overrides `bunVersion` on Vercel. The deployed Angular app runs in the browser.
+- This is one Angular application, named `first`, with source in `src/`.
+- Start development: `bun run start`.
+- Lint TypeScript and HTML: `bun run lint`. SCSS is not part of the configured lint targets.
+- Run the Vitest suite once: `bun run tests_ci`.
+- Run a focused test file or directory: `bunx ng test --watch=false --include src/app/services/banned-currencies.service.spec.ts`.
+- Use `bun run build:app` for a production build under Bun. Do not use `bun run build` for routine verification: it also injects/uploads Sentry source maps.
+- Production budgets limit initial output to 1 MB and any component stylesheet to 4 KB.
 
-Before changing Angular code, inspect `package.json` and run `bunx ng version`. Apply guidance appropriate to the installed Angular version, not merely the intended target version.
+## Application wiring
 
-## Package manager and commands
+- The app is standalone and bootstraps from `src/main.ts`; it registers routing, `HttpClient` with `withFetch()`, Sentry error/tracing, Vercel Analytics, and Speed Insights directly there. Preserve these providers and telemetry initialization when changing bootstrap code.
+- `AppComponent` periodically fetches NBU exchange rates and filters them through `BannedCurrenciesService`. The ban list is the shipped asset `src/assets/config/banned-currencies.json`; rate and ban-list URLs plus display priority live in `src/app/utils/constants.ts`.
+- Components use OnPush change detection, signals for local state, and reactive forms. Keep new dependencies in each standalone component's `imports` array.
 
-Use Bun because `angular.json` declares `bun` as the package manager and `bun.lockb` is tracked.
+## Tests
 
 - Install dependencies: `bun install`
 - Start locally: `bun run start`

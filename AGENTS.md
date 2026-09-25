@@ -2,8 +2,8 @@
 
 ## Toolchain and commands
 
-- Use Bun 1.4.x (`bun.lockb` is tracked); Node.js 24.x is required.
-- Vercel runs the build script under Bun via `vercel.json`; `bunVersion` selects Bun for any future Vercel Functions. The deployed Angular app runs in the browser.
+- Use Bun 1.4.x (`bun.lockb` is tracked). When running the Angular CLI under Node.js, use Node.js 24.15.0 or newer within the 24.x release line.
+- Vercel runs the build script under Bun via `vercel.json`; do not set `engines.node` in `package.json` because it overrides `bunVersion` on Vercel. The deployed Angular app runs in the browser.
 - This is one Angular application, named `first`, with source in `src/`.
 - Start development: `bun run start`.
 - Lint TypeScript and HTML: `bun run lint`. SCSS is not part of the configured lint targets.

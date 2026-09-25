@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        bun-version: [1.x]
+        bun-version: [1.4.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
 
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: ${{ matrix.bun-version }}
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
